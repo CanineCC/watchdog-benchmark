@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/CanineCC/watchdog-benchmark/tools/verdicts.schema.json",
+  "title": "Watchdog benchmark — per-finding verdicts",
+  "description": "One record per audited finding. A published run ships one of these per tool; noise_stats.py recomputes the number from it. CSV form uses the same column names as these properties.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": true,
+    "required": ["repo", "class"],
+    "properties": {
+      "repo": {
+        "type": "string",
+        "description": "The repository the finding is in — the cluster the primary (bootstrap) interval resamples over. Use a stable identifier, e.g. owner/name@<sha>."
+      },
+      "class": {
+        "type": "string",
+        "enum": ["valid", "false-positive", "opinion-not-fact", "redundant", "shape-irrelevant"],
+        "description": "The five-class taxonomy verdict (METHOD.md §1). noise = the four non-valid classes."
+      },
+      "id": {
+        "type": "string",
+        "description": "The finding's stable id within its report."
+      },
+      "dimension": {
+        "type": "string",
+        "description": "The scoring dimension the finding belongs to (e.g. D3, D34)."
+      },
+      "language": {
+        "type": "string",
+        "description": "The finding's primary language, for the per-language breakdown."
+      },
+      "rater": {
+        "type": "string",
+        "description": "Who produced this verdict: the pinned machine judge id, or an anonymised human rater id (e.g. rater-A / rater-B). A published run carries both machine and human verdicts."
+      },
+      "evidence_defect": {
+        "type": "boolean",
+        "description": "The finding is right in substance but wrong in coordinates (still valid; increments a separately-published evidence-defect rate). Never folded into the noise ratio."
+      },
+      "reason": {
+        "type": "string",
+        "description": "The concrete basis for the verdict (file/line/mechanism checked)."
+      }
+    }
+  }
+}
