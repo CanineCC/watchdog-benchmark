@@ -19,11 +19,21 @@ act on*, whether or not it is technically correct. Every audited finding is plac
 | **valid** | signal | Factually true at the cited location, and an informed maintainer of *this* codebase would accept it as a real, non-trivial issue (or an accurate measurement). **Uncertain = valid** — the auditor never manufactures noise; ambiguity is resolved in the tool's favour. |
 | **false-positive** | noise | Asserts something factually untrue of the code, or publishes a score/claim with no supporting evidence. The auditor must be able to state the concrete disproof — file, line, mechanism — not merely disagree. |
 | **opinion-not-fact** | noise | The measurement is accurate, but the stated conclusion, framing, or quantified promise goes beyond what the measurement supports. |
-| **redundant** | noise | True, but duplicates another finding such that one remediation clears both; each finding beyond the first is redundant. |
+| **redundant** | noise | True, but — *after the logical-finding collapse below* — still restates another finding such that one remediation clears both and the second adds no separately-actionable information. Multi-lens detection of one issue is **not** redundant (see below). |
 | **shape-irrelevant** | noise | Factually grounded, but applies an expectation foreign to the *kind* of software being scanned (a library / CLI / service / desktop app / framework), which an informed maintainer would decline as "not applicable to what this is". |
 
 **A binary true/false rate captures only the first noise class**, so it is a *lower bound* on real noise. The
 broad five-class number is at least as high as any binary FP rate on the same findings.
+
+**The unit of measurement is the logical finding, not the rule that fired.** When several lenses (dimensions)
+detect the *same issue at the same site*, they are counted as **one** finding annotated with every contributing
+lens — counted once, one verdict, decided by the underlying issue. **Corroboration across lenses is signal
+(independent confirmation the issue is real), never noise.** A finding is never scored as noise merely for being
+seen by more than one lens: a *false positive* means the tool said something **untrue**, whereas two true
+measurements of one real issue (e.g. a function's cyclomatic *and* cognitive complexity) are both true — scoring
+the second as noise would conflate "reported it twice" with "got it wrong". Where multiple lenses instead fire on
+something that should not have been flagged at all (e.g. a generated file read as authored source), the collapsed
+single finding is scored **shape-irrelevant** or **false-positive** on its merits — again one finding, not N.
 
 ## 2. The noise formula
 

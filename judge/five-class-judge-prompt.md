@@ -27,11 +27,20 @@ never carries a published number.
 > - **opinion-not-fact** — the underlying measurement is accurate, but the stated conclusion, framing, or
 >   quantified promise goes beyond what the measurement supports. Separate the number from the narrative; if the
 >   number is right and the narrative is not entailed by it, it is opinion.
-> - **redundant** — true, but duplicates another finding in the same report such that a single remediation clears
->   both. Two true findings that require *different* actions are **not** redundant. Name the finding it duplicates.
+> - **redundant** — true, but — *after collapsing multi-lens findings (below)* — still restates another finding
+>   such that a single remediation clears both and the second adds no separately-actionable information. Two true
+>   findings that require *different* actions are **not** redundant. Name the finding it duplicates.
 > - **shape-irrelevant** — factually grounded, but applies an expectation foreign to the *kind* of software this is.
 >   First identify the software's shape from the repository (library / CLI / service / desktop app / framework /
 >   downloadable product); then ask whether the finding's implied obligation attaches to that shape.
+>
+> **UNIT = THE LOGICAL FINDING, NOT THE RULE.** Before assigning verdicts, collapse findings that describe the
+> *same issue at the same site* across different dimensions/lenses into ONE finding carrying every contributing
+> lens. Assign it a single verdict on the underlying issue. Multi-lens detection of one real issue is **valid**
+> (the lenses corroborate — that is signal, not noise); it is *never* "one valid + N redundant". If the multiple
+> lenses instead fired on something that should not have been flagged at all (e.g. generated code read as authored
+> source), score the single collapsed finding **shape-irrelevant** or **false-positive** on its merits. A finding
+> is never noise merely for being reported by more than one lens.
 >
 > **noise = false-positive + opinion-not-fact + redundant + shape-irrelevant. valid is signal.**
 >
