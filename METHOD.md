@@ -8,7 +8,8 @@ Read this with [`REPRODUCE.md`](REPRODUCE.md) (how to check a result) and
 
 > **What changed in 2.0, and what did not.** The construct is renamed to **audited broad-noise (ABN)**; the
 > binding precedence order and collapse-then-classify sequence are stated explicitly; the holdout design moves
-> from *sealed once* to *rotating per cycle*; and §3 states which dimensions the committed rate covers.
+> from *sealed once* to *rotating per cycle*; and **ABN is now defined over a stated dimension scope**, with
+> the committed number being **ABN(scored)** and the advisory rate published beside it (§2, §3).
 > **No class boundary, no denominator and no precedence rule changed** — §11 records this in full.
 
 ---
@@ -74,13 +75,28 @@ verification does change the primary verdict to false-positive.
 
 ## 2. The ABN formula
 
-For a tool *t* on a corpus *C*:
+★ **ABN is defined over a stated dimension scope, and the scope is part of the number.** A rate quoted without
+one is not an ABN; it is an average of two different questions.
+
+For a tool *t* on a corpus *C* over a dimension set *D*:
 
 ```
-ABN(t, C) = (#false-positive + #opinion-not-fact + #redundant + #shape-irrelevant)
-            ──────────────────────────────────────────────────────────────────────
-                              #audited findings of t on C
+ABN(t, C, D) = (#false-positive + #opinion-not-fact + #redundant + #shape-irrelevant)
+               ──────────────────────────────────────────────────────────────────────
+                        #audited findings of t on C from dimensions in D
 ```
+
+Two scopes are published, always together, and neither is published alone:
+
+| | scope | what it answers |
+|---|---|---|
+| **ABN(scored)** — *the committed number* | dimensions that can move a user's score | the noise in what a user is actually scored on |
+| **ABN(advisory)** | dimensions that cannot | how much we should trust the detectors we already declined to price with |
+
+**Every published headline, gate and target in this protocol refers to ABN(scored)** unless it says otherwise.
+There is no third, merged figure: an ABN over `scored ∪ advisory` is not defined here, because it averages a
+measurement of the product with a measurement of detectors the product does not rely on, and — see §3 — it is not
+comparable across languages.
 
 - **The denominator is finding-level records only.** Tool-level summary claims (e.g. "0 vulnerable dependencies"
   asserted as a score) are audited under the same taxonomy but recorded separately, never mixed into this ratio —
@@ -101,8 +117,8 @@ measurement:
 - **Advisory dimensions** do not, and cannot. They are surfaced to the user and explicitly cannot move the score,
   because the detector is not trusted enough to price with.
 
-**The committed ABN is measured over scored dimensions only.** The advisory rate is published beside it, always,
-never merged into it. Both numbers are required; neither is published alone.
+§2 fixes the arithmetic; this section fixes *which dimensions are in which scope*, and why the split is not an
+accounting preference but a condition of the number meaning anything.
 
 Three reasons, in order of importance:
 
@@ -252,7 +268,8 @@ The standing answer to any challenge is: **run it.**
 
 ## 11. The target, and the discipline
 
-Watchdog's official bar is an **audited broad-noise rate below 5%** over scored dimensions, on a blind rotating
+Watchdog's official bar is **ABN(scored) below 5%** — audited broad noise over the dimensions that can move a
+user's score — on a blind rotating
 holdout under the broad taxonomy above — a target, and a deliberately demanding one (broad-definition, stricter
 than the narrow-precision numbers most tools quote). The ratchet is **< 5% → < 2.5% → < 1%**, each a separate
 result as the engine earns it.
@@ -269,7 +286,7 @@ the target and this method are the whole claim.
 | The construct is named **audited broad-noise (ABN)**. "Effective false-positive rate" is withdrawn because it denotes an observed user-behaviour event we do not measure. | The ratio itself, its numerator and its denominator. |
 | The **binding precedence order** and the collapse-then-classify sequence are stated explicitly (§1.1). | The five class boundaries. The precedence was always the intended decision procedure; it was previously left implicit, which is a clarification, not a revision. |
 | The holdout is **rotating and drawn per cycle from a published generated seed** (§4 G1), replacing a once-sealed manifest. Nothing is permanently consumed. | That no published measurement runs on repositories chosen after their results were known — the property the sealed design existed to guarantee. |
-| §3 states that the committed rate covers **scored dimensions**, with the advisory rate published beside it, and §3.1 requires reclassification to be published. | The denominator's definition within a given scope. |
+| **ABN carries its dimension scope in the definition** (§2): the committed number is **ABN(scored)**, the advisory rate publishes beside it, and no merged figure is defined. §3.1 requires reclassification to be published. | The denominator's definition *within* a given scope — the arithmetic is identical, only the scope is now named. |
 | §8 adds mechanical **concentration detection** and a disclosure requirement. | The published statistic remains the pooled ratio of §2. |
 
 Earlier versions of this file are in the repository history; no published result has been recomputed under 2.0
