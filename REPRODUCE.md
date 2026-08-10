@@ -3,10 +3,15 @@
 When a measured result is published into [`data/`](data/), you can check it **three independent ways** — none of
 which needs Watchdog's engine. (The engine is private; we publish its *findings* as data, and you audit those.)
 
-Each published run is a directory `data/<run-id>/` containing: the sealed holdout `manifest.json` (repos + pinned
-SHAs + the committed file-hash), each tool's raw normalized `findings.jsonl`, every `verdicts.csv` (machine and
-human), the human sample, the inter-rater agreement stats, and the run's `README.md` (tool pins, judge model id,
-consumption context).
+Each published run is a directory `data/<run-id>/` containing: the published `draw.json` (seed, sampler version,
+the drawn repos with the commit each was measured at, recency strata, and every discard with its reason), each
+tool's raw normalized `findings.jsonl`, every `verdicts.csv` (machine and human), the human sample, the
+inter-rater agreement stats, the dimension classification in force (which dimensions were scored and which
+advisory), and the run's `README.md` (tool pins, judge model id, consumption context).
+
+**Re-run the draw yourself.** The sampler is `SHA-256(seed ␟ language ␟ samplerVersion ␟ repoId)` ascending,
+keeping the first `max(reserveFloor, ⌈reserveFraction × eligible⌉)`. Same seed and same eligible pool must give
+the identical set — that check is the point of publishing the seed.
 
 ## 1. Recompute the arithmetic (seconds)
 
@@ -41,7 +46,8 @@ resolve it, count it as noise on us.
 
 ## …and the full end-to-end
 
-To go all the way — clone the sealed holdout at the pinned SHAs, run **your own** scanner over it, judge its
+To go all the way — clone the drawn repos at the commits they were measured at, run **your own** scanner over
+them, judge its
 findings with the same prompt, and compute its noise the same way. That is the head-to-head the method is built
 for. We publish *our* findings, not our engine, so you can't re-run Watchdog itself — but you can hold any tool,
 including ours, to the identical, published standard. Ask the other tools for theirs.

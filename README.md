@@ -28,7 +28,7 @@ home turf". So they stay separate. The *score's* reproducibility is a CAI matter
 | [`judge/five-class-judge-prompt.md`](judge/five-class-judge-prompt.md) | The exact prompt a machine judge is given to classify a finding, so the judging is reproducible. |
 | [`tools/noise_stats.py`](tools/noise_stats.py) | Open, dependency-light: recompute the noise %, the cluster-aware bootstrap confidence interval, and the exposure-gate checks **from a verdicts file** — ours or your own. |
 | [`REPRODUCE.md`](REPRODUCE.md) | How to re-derive a published number three independent ways. |
-| [`data/`](data/) | Where the sealed holdout manifests, raw findings, and every verdict land — **with the first measured result** (see below). |
+| [`data/`](data/) | Where the published draws, raw findings, and every verdict land — **with the first measured result** (see below). |
 
 ## What's deliberately **not** here
 
@@ -39,13 +39,15 @@ home turf". So they stay separate. The *score's* reproducibility is a CAI matter
 
 ## The honesty gate (why `data/` is mostly empty today)
 
-A noise rate is only worth publishing if it was **measured on a sealed, fresh holdout and validated by humans**.
+A noise rate is only worth publishing if it was **measured on a blind holdout and validated by humans**.
 Until a result clears that bar we publish the **method** and the **target**, never an achieved figure:
 
-- **Target:** an effective false-positive rate **below 5%**, measured under the broad five-class taxonomy on a
-  sealed fresh holdout — a ratchet of **< 5% → < 2.5% → < 1%** as the engine earns each.
+- **Target:** an **audited broad-noise rate (ABN)** **below 5%** over scored dimensions, measured under the broad
+  five-class taxonomy on a **blind rotating holdout** — a ratchet of **< 5% → < 2.5% → < 1%** as the engine earns
+  each. (ABN was called an "effective false-positive rate" through protocol 1.0; the ratio is unchanged, but that
+  term denotes an observed user-behaviour event we do not measure. See `METHOD.md` §12.)
 - **No achieved Watchdog noise number** appears anywhere here (or in our marketing) until a fresh-holdout run is
-  human-validated. When it is, the full run — sealed manifest, raw findings, every verdict, agreement statistics —
+  human-validated. When it is, the full run — the published draw, raw findings, every verdict, agreement statistics —
   publishes into `data/` and you can re-run the arithmetic yourself with `tools/noise_stats.py`.
 
 The published literature we measure *against* (independent measurements of mainstream tools) is summarised in
