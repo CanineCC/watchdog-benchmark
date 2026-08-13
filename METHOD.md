@@ -178,6 +178,35 @@ A number is publishable only when its gates are green. Publication is mechanical
   rater must not have built the engine.** Unresolvable disagreements default **against the tool's own interest**.
   **All raw verdicts are published.**
 
+  **★ Two run types, and they need different amounts of this (added 2026-08-13).** A **Full** run carries the
+  whole of G2 as written above — two independent raters, κ ≥ 0.8 between them. A **Refresh** re-measures an
+  already-published language on a moved engine and carries **one internal senior rater**, on the same
+  once-per-cycle balanced sample. The distinction exists because the expensive part of G2 is the second human,
+  and requiring it twice a year to restate a number that has already cleared it once buys less than it costs.
+  A refresh may not *establish* a claim that has never been externally verified; it may only re-measure one.
+
+  **The three rungs a measurement can stand at:**
+
+  | rung | name | requires | may publish |
+  |---|---|---|---|
+  | 1 | measured | holdout, frozen engine, caps lifted, machine judge — per language | no |
+  | 2 | internally verified | + one internal senior rater on the cycle's audit | a **Refresh** |
+  | 3 | externally verified | + a second, external rater; κ ≥ 0.8 **between raters** | a **Full** run |
+
+  **★ What rung 2 is measured against.** Machine-vs-human is scored on the **disagreement rate**, with the
+  gate at **≤ 10 %** as stated above — not on a Cohen's κ threshold. This is deliberate and it is worth being
+  explicit, because κ is the more familiar statistic and the substitution is easy to make by accident. κ
+  corrects for chance using the *marginals*, so the same judge and the same rater score differently purely
+  because the sample's prevalence changed; a disagreement rate does not move under re-weighting and means the
+  same thing to a reader at any prevalence. **Both κ are still computed and published** — they are how this
+  compares to the inter-rater literature — but the gate is the rate.
+
+  **★ How the re-weighted κ is computed.** The sample is stratified on the machine's verdict, so re-weighting
+  it onto the measured prevalence means re-weighting **those strata**, and letting the observed agreement move
+  with them. Holding the balanced sample's raw agreement fixed while swapping in the population's marginals
+  describes no population: agreement generally differs between the strata, and the larger one at production
+  prevalence is the machine-said-valid stratum. On cycle 1 the two computations differ by 0.11 of a κ.
+
   **★ The human sample is drawn ONCE PER CYCLE, across every language, not once per language.** κ measures
   whether a human agrees with the machine judge, and that judge is one model with one pinned prompt applied to
   every language — so its reliability is a property of the *judge*, not of any language. Sampling per language
