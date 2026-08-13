@@ -234,6 +234,68 @@ A number is publishable only when its gates are green. Publication is mechanical
   a test. A pooled figure catches a judge that fails badly on one language — it drags the gate down — but not one
   that fails *mildly*; the per-slice screen exists for that case, and it is a trigger to investigate, never a
   per-language gate.
+  ---
+
+  **★ G2 FROM CYCLE 2 — THE JUDGING CASCADE (added 2026-08-13).** The design above spends a human as a
+  measuring instrument: rate a large random sample so an agreement statistic can be computed. Cycle 1
+  showed what that costs. Its 500-item audit was answered at a **median of 9 seconds per item** — a
+  screening pass, not the considered expert review the design assumed, and no amount of instruction
+  fixes an ask that large. It is replaced by a cascade in which people adjudicate rather than replicate.
+
+  **Two judges, independently, on every finding.** Where they agree, the verdict is accepted. Where they
+  disagree, **two further judges rate the same finding blind** — they are not shown the first pair's
+  verdicts or reasoning, because that anchors the answer on whichever position was argued more fluently.
+  If the second pair lands on the same side, that side is accepted. If they split, **a human
+  adjudicates**, seeing all four verdicts and their reasoning. Roughly 6 % of findings reach a person,
+  and they are the genuinely contested ones.
+
+  Judges are **four distinct models**, not one model with four prompts: a blind spot lives in the weights
+  and no rephrasing removes it. The strongest models sit in the second round, which sees only what the
+  first round found hard. **Agreement is evaluated on the binary noise/not-noise boundary**; the noise
+  class is recorded as a diagnostic but does not gate, because the classes overlap in practice and
+  requiring class agreement manufactures disagreement about vocabulary.
+
+  **★ Ensemble agreement measures consistency, not correctness**, and models of one family share blind
+  spots. A permanent random sample of AUTO-ACCEPTED findings therefore goes to a human every cycle —
+  without it, unanimity is unfalsifiable and the pipeline validates itself. The per-cycle sample is a
+  **tripwire, not a measurement**: at a 5 % error rate, 25 items cannot separate 2 % from 8 %, though
+  they would catch a gross failure. **The twelve-month pooled result is the measurement, and publishes
+  with its confidence interval.**
+
+  **★ One verdict set, for humans and machines alike.** In cycle 1 the rater answered a binary while the
+  judge answered a five-class taxonomy; agreement between two different questions is not a measurement.
+  Both now choose from: *noise — should not have fired*; *valid and actionable*; **valid but NOT
+  actionable** (correct, but its reasoning or remediation is too thin to act on); *both positions wrong*;
+  *cannot tell from the evidence shown*; *the rubric is ambiguous here*.
+
+  The third is new and it separates two things this method previously merged: whether a finding is
+  **true**, and whether it is **useful**. A correct finding nobody can act on is a true positive for the
+  detector and a failure for the product. **An actionability rate is therefore published beside the noise
+  rate.**
+
+  **★ Items nobody could judge are EXCLUDED from the rate — and the exclusion is itself a gate.** Scoring
+  agreement on a question with no determinate answer measures coin flips. But excluded items are not
+  randomly distributed: they concentrate where the evidence is thin, which is where the judge is worst,
+  so dropping them raises measured agreement for reasons unrelated to the judge. Accordingly, decided in
+  advance: both exclusion counts publish as first-class figures beside the rate and per dimension, and
+  **combined exclusions above 5 % VOID the audit** — it does not pass with a caveat and it does not
+  condemn the judge; it means the instrument was unfit to run, and it is fixed and run again. When a
+  *judge* returns "cannot tell", the finding escalates instead of being excluded, so the pipeline cannot
+  acquire a way to duck its hardest cases and still report a clean rate.
+
+  **★ What publishes.** Every run's noise numbers publish, and the cascade is what makes that defensible:
+  validation is inline rather than a separate gate that either blesses a number or bins it. By the time a
+  rate exists, every contested finding has been adjudicated. Each published rate carries its pipeline
+  census (auto-accepted, resolved at round two, human-adjudicated), its exclusion counts against the 5 %
+  ceiling, the cycle's spot-check result and the twelve-month pooled figure with its interval, the
+  actionability rate, the frozen engine sha, the holdout seed, and the model set with versions. Runs are
+  monthly; every rate publishes with a stated minimum detectable difference, and a month-on-month move
+  inside it is reported as no detectable change rather than as improvement.
+
+  **Cycle 1 published nothing.** It measured seventeen languages and was abandoned, with the reason
+  recorded, because its human audit missed the ≤ 10 % bar at 15.2 %. A failed verification is evidence,
+  and the one thing that must not happen to it is silence.
+
 - **G4 — Absolute threshold.** Pooled micro-average over **scored dimensions** (§3); green only if the
   **cluster-aware 95% CI upper bound is below 10%** *and* no single language's point estimate is ≥ 2× the
   threshold. (Our internal *target* of < 5% sits inside this with margin — but < 5% is a target, not a gate the
