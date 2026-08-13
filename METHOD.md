@@ -177,6 +177,34 @@ A number is publishable only when its gates are green. Publication is mechanical
   **≤ 10%** on the noise-vs-valid boundary (else the judge is revised and everything re-judged). **At least one
   rater must not have built the engine.** Unresolvable disagreements default **against the tool's own interest**.
   **All raw verdicts are published.**
+
+  **★ The human sample is drawn ONCE PER CYCLE, across every language, not once per language.** κ measures
+  whether a human agrees with the machine judge, and that judge is one model with one pinned prompt applied to
+  every language — so its reliability is a property of the *judge*, not of any language. Sampling per language
+  buys only the detection of *uneven* reliability, and buys it badly: at 100 items per language a judge agreeing
+  95% of the time yields κ = 0.835 with a 95% interval of **[0.69, 0.98]**, which can neither clear nor miss a
+  0.8 bar. A single balanced sample of **500 findings** spread across the measured languages puts that interval
+  inside **±0.04**.
+
+  **The human sample is balanced on the machine's verdict — roughly half findings it called noise — rather than
+  drawn to match the measured noise rate.** This is not a softer test. Cohen's κ discounts the agreement expected
+  by chance, and where noise is rare that discount is severe: at a 19% noise rate the expected agreement is 0.70,
+  against 0.50 in a balanced sample, so identical raw agreement scores markedly lower. A representative sample
+  would be a harsher test of the *rate*, which G1 already measures directly, and a weaker test of the thing this
+  gate is for — whether a human and the judge separate noise from valid the same way. **Two κ are therefore
+  published, never one: κ on the sample as drawn, and κ re-weighted onto the measured prevalence, together with
+  the confusion matrix they are both computed from.** The re-weighted figure is lower by construction; a reader
+  can recompute at any prevalence they choose.
+
+  **Disagreement is additionally reported per dimension and per language.** Per dimension is the primary cut: a
+  judge's difficulty lives in the question a dimension asks rather than in the language it was asked about — the
+  same dimension has ranged from **2.6% to 75.7%** noise across languages in one cycle, so a language's apparent
+  unreliability is substantially its dimension mix. A slice carrying **≥ 4 disagreements at more than twice the
+  overall rate** is named and re-sampled. **That threshold is fixed before the cycle's numbers are seen**, for
+  the same reason the reserve is drawn before it is measured: a trigger chosen afterwards is a description, not
+  a test. A pooled figure catches a judge that fails badly on one language — it drags the gate down — but not one
+  that fails *mildly*; the per-slice screen exists for that case, and it is a trigger to investigate, never a
+  per-language gate.
 - **G4 — Absolute threshold.** Pooled micro-average over **scored dimensions** (§3); green only if the
   **cluster-aware 95% CI upper bound is below 10%** *and* no single language's point estimate is ≥ 2× the
   threshold. (Our internal *target* of < 5% sits inside this with margin — but < 5% is a target, not a gate the
