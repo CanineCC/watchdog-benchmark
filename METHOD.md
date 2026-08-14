@@ -362,6 +362,38 @@ A number is publishable only when its gates are green. Publication is mechanical
   - **A change that improves the noise rate while lowering valid-findings-per-100k-LoC is a regression**,
     and is recorded as one however good the headline looks.
 
+- **★ G3c — COMPARABILITY: a noise rate compares only tools making comparably falsifiable claims
+  (added 2026-08-14).**
+
+  *"Line 42 dereferences a value that may be null"* is checkable — someone opens the file and it is true
+  or it is not, and it can be a false positive. *"This file is a hotspot with declining health"* is
+  statistical and about where to spend attention: a reader may disagree, but cannot falsify it, and it
+  has no clean false-positive state.
+
+  **A tool making the first kind of claim can be scored for noise; a tool making the second largely
+  cannot.** So a naively-published noise rate **penalises specificity** — the more checkable a tool's
+  output, the more of it can be shown wrong. Comparing a pooled rate across tools with different claim
+  mixtures is a category error, and this specification refuses to make it.
+
+  Therefore, required of every published result:
+
+  1. **A claim-specificity declaration** per dimension or rule family — *pointwise* (a specific
+     location), *structural* (a named artefact's shape), *statistical* (attention or risk), or
+     *advisory* (a recommendation resting on any of those).
+  2. **The rate publishes per class, never only pooled.** A tool that is 95 % pointwise and one that is
+     80 % statistical do not have comparable pooled rates.
+  3. **Advisory claims are scored apart from the findings they rest on.** A detection can be correct
+     while its recommendation is wrong; for behavioural dimensions that is the usual failure mode rather
+     than an edge case, and it is the `valid but not actionable` verdict.
+  4. **A tool with no falsifiable output receives no noise rate**, and the table says *not measurable
+     under this method* rather than leaving a blank that reads as clean.
+
+  **★ Measurement-environment integrity is a pre-publication gate, not a caveat.** A finding class that
+  depends on repository history cannot be measured in an environment where that history is unreadable —
+  a contained scan without a readable `.git` will emit false "dormant" and false "unowned" verdicts. A
+  result produced that way reports a harness defect as a product weakness. The environment is verified
+  **before** the number publishes, never explained afterwards.
+
 - **G4 — Absolute threshold.** Pooled micro-average over **scored dimensions** (§3); green only if the
   **cluster-aware 95% CI upper bound is below 10%** *and* no single language's point estimate is ≥ 2× the
   threshold. (Our internal *target* of < 5% sits inside this with margin — but < 5% is a target, not a gate the
