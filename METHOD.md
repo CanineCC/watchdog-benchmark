@@ -296,6 +296,72 @@ A number is publishable only when its gates are green. Publication is mechanical
   recorded, because its human audit missed the ≤ 10 % bar at 15.2 %. A failed verification is evidence,
   and the one thing that must not happen to it is silence.
 
+- **★★ G3b — PRECISION AND RECALL, AND WHY A RATIO IS NOT AN OPTIMISATION TARGET (added 2026-08-14).**
+
+  ABN is a **precision** measure. It reports what share of what a tool said was worth reading was not,
+  and it says **nothing whatever** about what the tool failed to say. Both halves are stated here
+  because the omission is not neutral — it points the wrong way.
+
+  ```
+  measured noise% = FP / (FP + TP_reported)
+  true noise%     = FP / (FP + TP_reported + FN)
+  ```
+
+  Every real issue a tool misses is a valid finding absent from the denominator, so **a tool that misses
+  more looks cleaner**. On a 2,153-finding corpus measured at 18.66 %, a 20 % recall gap means the true
+  figure is 14.94 %; a 30 % gap makes it 13.07 %.
+
+  **★ And the incentive is worse than the arithmetic.** The cheapest way to improve a noise rate is to
+  report less. Any programme that optimises a noise ratio is being paid to suppress detection, and will
+  — not through bad faith but because that is what the number rewards. **Closing a false negative can
+  make a published noise rate worse**, since newly-detected findings carry their own error rate. A team
+  reading only that number would rationally stop closing gaps.
+
+  **So a ratio whose denominator the tool controls is not published as a headline, and never as a
+  quality score.** What publishes is the pair, in absolute terms per unit of code:
+
+  | | per 100k LoC |
+  |---|---|
+  | **valid findings delivered** | the tool's yield |
+  | **noise findings delivered** | what the reader waded through |
+
+  The ratio is derived from these and reported beside them, never instead of them. The reason is
+  immediate: a tool reporting 42 valid and 8 noise per 100k LoC has a *worse* ratio (16.0 %) than one
+  reporting 12 valid and 2 noise (14.3 %), and is plainly the better instrument. **The ratio hides
+  suppression; the absolutes expose it.**
+
+  **What a published measurement must therefore carry:** valid-per-100k-LoC, noise-per-100k-LoC, the
+  derived rate, and a **recall estimate with its method named**. A precision figure published alone is
+  incomplete, and this specification treats it as such.
+
+  **Recall estimation, in the order of what is actually obtainable:**
+
+  1. **The gap ledger.** Every issue later discovered to have been missed is recorded against the
+     dimension that missed it and **publishes as a standing count**. It yields no absolute recall, but
+     it gives per-dimension health, a trend, and — being a count of our own failures — it is the one
+     recall signal that cannot be flattered.
+  2. **★ Multi-vendor union.** With several tools measured on one holdout, the union of all findings
+     judged valid is the best available approximation of what is there, and each tool's recall is its
+     share of that union. **No single vendor can compute this alone**, which is the strongest argument
+     for a shared standard and is independent of any argument about neutrality.
+  3. **Longitudinal.** For public repositories, a change at HEAD that fixes something never flagged is a
+     missed finding, established without any human judgement.
+  4. **Known-defect corpora**, per dimension — a regression floor rather than a recall estimate, since
+     it measures detection of what was planted.
+  5. **Blind human-first review** — practitioners find issues without seeing tool output. The only
+     method that finds what nobody thought to look for, and the most expensive.
+
+  **★ Training discipline, which is where the damage would actually be done:**
+
+  - **A change that suppresses detection must measure its recall cost before it lands**, on a corpus
+    with known valid findings. "It reduced noise" is not a result; it is half of one.
+  - **Every closed gap becomes a permanent regression case.** Recall regresses silently otherwise —
+    there is no complaint from a finding that was not made.
+  - **Gap-closing and noise-reduction carry separate budgets**, so the measured one cannot starve the
+    unmeasured one.
+  - **A change that improves the noise rate while lowering valid-findings-per-100k-LoC is a regression**,
+    and is recorded as one however good the headline looks.
+
 - **G4 — Absolute threshold.** Pooled micro-average over **scored dimensions** (§3); green only if the
   **cluster-aware 95% CI upper bound is below 10%** *and* no single language's point estimate is ≥ 2× the
   threshold. (Our internal *target* of < 5% sits inside this with margin — but < 5% is a target, not a gate the
