@@ -292,9 +292,18 @@ A number is publishable only when its gates are green. Publication is mechanical
   monthly; every rate publishes with a stated minimum detectable difference, and a month-on-month move
   inside it is reported as no detectable change rather than as improvement.
 
-  **Cycle 1 published nothing.** It measured seventeen languages and was abandoned, with the reason
-  recorded, because its human audit missed the ≤ 10 % bar at 15.2 %. A failed verification is evidence,
-  and the one thing that must not happen to it is silence.
+  **Cycle 1 published nothing, and its human audit is not evidence of anything about the judge.** It
+  measured seventeen languages and was abandoned with the reason recorded. The audit that was meant to
+  validate it was answered at a **median of nine seconds per item** — which is a measurement of the
+  INSTRUMENT, taken from timestamps rather than from opinions, and it is robust. Every figure derived
+  from the *verdicts* in that audit — the disagreement rate, the confusion matrix, the per-dimension and
+  per-language cuts — **is withdrawn and is not cited anywhere in this method.** A rushed answer is not
+  a weak signal to be used with caution; it is not a signal.
+
+  ★ That withdrawal includes the reading that flattered us: the audit appeared to show the judge
+  over-calling noise, implying our published rates would be conservative. It rests on the same clicks
+  and it is retired with the rest. A failed verification is evidence, and so is an audit that turned out
+  to measure its own instrument — but neither licenses a number.
 
 - **★★ G3b — PRECISION AND RECALL, AND WHY A RATIO IS NOT AN OPTIMISATION TARGET (added 2026-08-14).**
 
@@ -393,6 +402,30 @@ A number is publishable only when its gates are green. Publication is mechanical
   a contained scan without a readable `.git` will emit false "dormant" and false "unowned" verdicts. A
   result produced that way reports a harness defect as a product weakness. The environment is verified
   **before** the number publishes, never explained afterwards.
+
+- **★ G3d — ONE REPOSITORY MUST NOT BE ABLE TO CARRY A LANGUAGE'S NUMBER (added 2026-08-15).**
+
+  A pooled rate over findings lets a single large or unusual repository dominate the figure for its
+  whole language. Watchdog observed this directly: one repository accounted for the bulk of a language's
+  measured noise, which made every comparison involving that language a comparison about that
+  repository.
+
+  **The answer is not to exclude it.** Dropping a repository because its rate is high or low is
+  selecting on the outcome — the defect this method exists to prevent, and one with a measured cost
+  (a 50–250 finding cap moved csharp −15.5 points and java +9.3). An outlier removed for being an
+  outlier takes its information with it and leaves no trace that it was there.
+
+  **Instead, report so domination cannot hide:**
+
+  1. **Both averages.** Pooled (micro, findings-weighted) *and* cluster-weighted (macro, each repository
+     equal). A large divergence between them IS the finding that one repository is carrying the number.
+  2. **The leave-one-out range.** The rate recomputed with each repository dropped in turn, published as
+     a span: *"24.4 %, or 11.2 %–24.4 % depending which single repository is excluded."* This discards
+     nothing, needs no judgement call, and tells a reader exactly what they need to know.
+  3. **The per-repository distribution**, so the shape is visible rather than summarised.
+
+  A number whose leave-one-out range is wide is not wrong — it is a number about a small number of
+  repositories, and it must say so.
 
 - **G4 — Absolute threshold.** Pooled micro-average over **scored dimensions** (§3); green only if the
   **cluster-aware 95% CI upper bound is below 10%** *and* no single language's point estimate is ≥ 2× the
