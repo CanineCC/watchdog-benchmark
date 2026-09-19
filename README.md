@@ -12,7 +12,7 @@ recompute it. If Watchdog says its noise is *X%*, everything you'd need to audit
 
 Two different things, kept at arm's length in two repositories:
 
-- **[CAI](https://github.com/CanineCC/CAI)** ([cai.canine.dev](https://cai.canine.dev)) — the open **standard**:
+- **[CAI](https://github.com/code-assurance-initiative/CodeAssuranceIndex)** ([codeassuranceindex.info](https://codeassuranceindex.info)) — the open **standard**:
   how *any* Codebase Assurance Index score is made and verified. Vendor-neutral by design; anyone can implement it.
 - **This repo (`watchdog-benchmark`)** — **one product's self-measurement**: how noisy *Watchdog* is, measured
   against a published protocol. This is Watchdog's evidence, not the standard.
