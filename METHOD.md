@@ -464,13 +464,22 @@ of them.
 
 | Changed | Not changed |
 |---|---|
-| A **repeated pattern is charged once and reported at every site.** Two collapses previously DELETED the duplicate rows; every site is now published and only one is charged. Measured over the 334-repository screen corpus: reported rows 1,906 → 2,072, one rule moved (`watchdog-eol-action-major-in-workflow`, 171 → 337 rows) with **repositories-hit unchanged at 82**. | **The charge is bit-identical at 1,906**, so no scored rate moves on this corpus — only the row count a reader sees. |
+| A **repeated pattern is ONE finding that names every site.** Two collapses previously published one row naming a count and AT MOST FOUR files with no line numbers; the one published row now names **every site at `file:line`** with no elision, and the rows it stands for are disclosed as `repeated_pattern_sites_folded`. Measured over the 334-repository screen corpus: **1,906 published rows, ZERO rules moved**, with all 166 folded sites named on the surviving rows across 49 repositories. | **The published row count and the charge, both 1,906 and both unchanged.** Nothing enters or leaves the measured population; what changes is that the folded sites are now findable and counted. |
 | **One vendoring vocabulary** replaces two that disagreed by fourteen directory names in both directions, so the same tree could be a third party's source for one lens and the product for another in one repository. Both lenses now exclude the union. | The definition of "vendored". Every added name is a tree the engine's own recorded evidence already called somebody else's source; nothing was newly declared vendored on judgement. |
 | Two **fail-toward-deletion defaults became fail-toward-keeping**, both where the guard had established nothing: an unreadable documentation corpus no longer proves a tooling script unpublished, and the PowerShell fetch-exec comment gate no longer drops a row when the file is unreadable, cites no line, or cites a line beyond the file's end. Counts for the affected rules can only RISE. | Every proven refutation. A line shown to sit inside a block comment or here-string is still dropped; a script shown to verify its download is still silenced. |
-| The report sentence for a row this dimension reports but does not charge now names its cause from two disclosed metrics rather than one, and stays vague when neither accounts for the whole exclusion. | Nothing measured — a report-layer wording fix, listed only because it ships with the first row. |
+| The report sentence for a row this dimension reports but does not charge no longer says "scored by another dimension" when it cannot attribute the exclusion — a claim about another lens that nothing had established. It names D36's pinning dedup when that accounts for the whole exclusion, and otherwise says only that the rows are not charged separately here. | Nothing measured — a report-layer correctness fix, listed only because it ships beside the rows. |
 
-★ **What the corpus does and does not establish.** Over the 334-repository screen corpus exactly one rule's row
-count moved and **no rule lost a row or a repository**. Two of the four changes are **not measurable there**: the
+★ **THE FIRST ROW WAS AMENDED THE SAME DAY IT WAS FILED, and the reason belongs in the record.** As first shipped
+it published every site as its OWN row and charged one. Checked against §1's taxonomy rather than asserted, those
+extra rows are **`redundant`** — which is noise — because "a single remediation clears both and the second adds no
+separately-actionable information", and §1.1's collapse step does not reach them: it collapses same-issue-SAME-SITE
+across lenses, and these are one issue at N sites. Publishing N rows for one remediation therefore publishes N−1
+rows this protocol counts against the tool. The design was reverted to one row carrying every site, which is why
+that row now reports **zero** movement rather than +166. The engine-side record keeps both the wrong reasoning and
+the corrected reasoning, deliberately.
+
+★ **What the corpus does and does not establish.** Over the 334-repository screen corpus **no rule's published row
+count moved at all, and no rule lost a row or a repository**. Two of the four changes are **not measurable there**: the
 vendoring union has zero exposure on it (336 repositories of ~6,200), and the fetch-exec rule draws zero rows on
 it at all. For those two the corpus establishes only that nothing *else* moved. The engine-side record names, for
 each, the population that would measure it.
