@@ -458,7 +458,7 @@ Each entry states what moved, what did not, and — where the available corpus c
 rather than presenting a silent corpus as a clean result. Per-change evidence lives in the engine repository at
 `engine/docs/rulesets/PREREGISTER-RECHECK-FAILURE-DIRECTION.md`.
 
-**2026-09-26 — five changes to the SAST (D29) and IaC (D31) published populations.** Recorded while all seventeen
+**2026-09-26 — six changes to the SAST (D29) and IaC (D31) published populations.** Recorded while all seventeen
 languages stood at `g2_await` with **zero passes of the 2026-08-01 round begun**, so no published result spans any
 of them.
 
@@ -468,6 +468,7 @@ of them.
 | **One vendoring vocabulary** replaces two that disagreed by fourteen directory names in both directions, so the same tree could be a third party's source for one lens and the product for another in one repository. Both lenses now exclude the union. | The definition of "vendored". Every added name is a tree the engine's own recorded evidence already called somebody else's source; nothing was newly declared vendored on judgement. |
 | Two **fail-toward-deletion defaults became fail-toward-keeping**, both where the guard had established nothing: an unreadable documentation corpus no longer proves a tooling script unpublished, and the PowerShell fetch-exec comment gate no longer drops a row when the file is unreadable, cites no line, or cites a line beyond the file's end. Counts for the affected rules can only RISE. | Every proven refutation. A line shown to sit inside a block comment or here-string is still dropped; a script shown to verify its download is still silenced. |
 | The report sentence for a row this dimension reports but does not charge no longer says "scored by another dimension" when it cannot attribute the exclusion — a claim about another lens that nothing had established. It names D36's pinning dedup when that accounts for the whole exclusion, and otherwise says only that the rows are not charged separately here. | Nothing measured — a report-layer correctness fix, listed only because it ships beside the rows. |
+| A **Glimmer component argument is no longer read as an unquoted HTML attribute.** `unquoted-attribute-var` assumes textual substitution into markup; `@name={{value}}` on an angle-bracket component hands the value to the component as a JavaScript value and writes nothing into the element, so the premise is false and the prescribed fix (`@link="{{true}}"`) coerces a boolean to a string. Measured by replaying **all 965** rows of this kind in the cycle-1 noise export through the compiled engine over the real corpus: **860 refuted, 105 kept**. Reach is **3 of 268 repositories (1.1 %)**, so no cross-language figure moves; but the rows are **963 of elixir's 1,522** — 63 % of that language's noise, in a **scored** dimension, and elixir is the highest of the seventeen at 45.6 % pooled. | **The rule, for every other shape.** A plain (non-`@`) attribute taking an interpolation anywhere on the line keeps its row — three measured rows of `<AccBadge title={{t '…'}} … @link={{true}}>` do — as do the 62 plain-attribute rows, the 40 bare-modifier and other shapes, and a php/wallabag **Twig** row, where substitution really is textual. Keyed on the `@arg=` syntax and a component tag name, never on the `.hbs` extension, because `express-handlebars` renders `.hbs` server-side by concatenation. |
 
 ★ **THE FIRST ROW WAS AMENDED THE SAME DAY IT WAS FILED, and the reason belongs in the record.** As first shipped
 it published every site as its OWN row and charged one. Checked against §1's taxonomy rather than asserted, those
@@ -483,6 +484,14 @@ count moved at all, and no rule lost a row or a repository**. Two of the four ch
 vendoring union has zero exposure on it (336 repositories of ~6,200), and the fetch-exec rule draws zero rows on
 it at all. For those two the corpus establishes only that nothing *else* moved. The engine-side record names, for
 each, the population that would measure it.
+
+★ **The sixth row's effect on elixir is stated POOLED, and pooled is not the committed number.** Removing its 860
+rows takes elixir from 45.6 % to **≈ 26.7 % pooled** (denominator 3,340, derived from the published rate as
+1,522 / 0.455689). The corresponding **ABN(scored)** figure is **not computed here, because it cannot be**: the noise
+export is 100 % noise rows by construction and carries no denominator, and cycle-1 runs never recorded the
+scored/advisory split at all. §2 commits to ABN(scored) and defines no merged figure, so the pooled estimate is
+disclosed as an estimate of the wrong quantity rather than presented as the result. What is certain is the direction
+and the population: 860 rows leave, all of them in a scored dimension, and none enter.
 
 ## 5. Confidence intervals
 
