@@ -447,6 +447,34 @@ A number is publishable only when its gates are green. Publication is mechanical
   both are published, and so is the gap between them. The gap is the quantity that says how much of an
   improvement was learning rather than fitting.
 
+### 4.2 The register of engine changes recorded before a cycle opens
+
+§4.1 freezes the engine *for* a measurement. This is the other half of that rule: a change to **which rows the
+engine publishes** moves §2's denominator, so it is recorded here, dated, **before any pass of the affected round
+is started** — never after a number is seen. Nothing in this section revises the method; the taxonomy, the
+formula, the precedence order and the gates are unchanged by every entry below.
+
+Each entry states what moved, what did not, and — where the available corpus cannot measure it — says so plainly
+rather than presenting a silent corpus as a clean result. Per-change evidence lives in the engine repository at
+`engine/docs/rulesets/PREREGISTER-RECHECK-FAILURE-DIRECTION.md`.
+
+**2026-09-26 — five changes to the SAST (D29) and IaC (D31) published populations.** Recorded while all seventeen
+languages stood at `g2_await` with **zero passes of the 2026-08-01 round begun**, so no published result spans any
+of them.
+
+| Changed | Not changed |
+|---|---|
+| A **repeated pattern is charged once and reported at every site.** Two collapses previously DELETED the duplicate rows; every site is now published and only one is charged. Measured over the 334-repository screen corpus: reported rows 1,906 → 2,072, one rule moved (`watchdog-eol-action-major-in-workflow`, 171 → 337 rows) with **repositories-hit unchanged at 82**. | **The charge is bit-identical at 1,906**, so no scored rate moves on this corpus — only the row count a reader sees. |
+| **One vendoring vocabulary** replaces two that disagreed by fourteen directory names in both directions, so the same tree could be a third party's source for one lens and the product for another in one repository. Both lenses now exclude the union. | The definition of "vendored". Every added name is a tree the engine's own recorded evidence already called somebody else's source; nothing was newly declared vendored on judgement. |
+| Two **fail-toward-deletion defaults became fail-toward-keeping**, both where the guard had established nothing: an unreadable documentation corpus no longer proves a tooling script unpublished, and the PowerShell fetch-exec comment gate no longer drops a row when the file is unreadable, cites no line, or cites a line beyond the file's end. Counts for the affected rules can only RISE. | Every proven refutation. A line shown to sit inside a block comment or here-string is still dropped; a script shown to verify its download is still silenced. |
+| The report sentence for a row this dimension reports but does not charge now names its cause from two disclosed metrics rather than one, and stays vague when neither accounts for the whole exclusion. | Nothing measured — a report-layer wording fix, listed only because it ships with the first row. |
+
+★ **What the corpus does and does not establish.** Over the 334-repository screen corpus exactly one rule's row
+count moved and **no rule lost a row or a repository**. Two of the four changes are **not measurable there**: the
+vendoring union has zero exposure on it (336 repositories of ~6,200), and the fetch-exec rule draws zero rows on
+it at all. For those two the corpus establishes only that nothing *else* moved. The engine-side record names, for
+each, the population that would measure it.
+
 ## 5. Confidence intervals
 
 Every published proportion carries a **cluster-aware bootstrap 95% confidence interval** as the **primary**
